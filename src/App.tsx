@@ -1,5 +1,10 @@
 import styled from "styled-components";
-import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useTransform,
+} from "framer-motion";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,10 +24,12 @@ const Box = styled(motion.div)`
 
 function App() {
   const x = useMotionValue(0);
-  useMotionValueEvent(x, "change", (value) => console.log(value));
+  const scale = useTransform(x, [-800, 0, 800], [2, 1, 0.1]);
+  // useMotionValueEvent(x, "change", (value) => console.log(value));
+  useMotionValueEvent(scale, "change", (value) => console.log(value));
   return (
     <Wrapper>
-      <Box style={{ x }} drag="x" dragSnapToOrigin />
+      <Box style={{ x, scale }} drag="x" dragSnapToOrigin />
     </Wrapper>
   );
 }
